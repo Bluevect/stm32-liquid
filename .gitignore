@@ -1,0 +1,47 @@
+# Build artifacts
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.elf
+*.hex
+*.bin
+*.map
+*.axf
+*.lst
+*.o
+*.obj
+*.d
+*.a
+*.so
+*.dll
+*.exe
+*.out
+*.log
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# STM32 / CubeMX generated outputs
+*.su
+*.launch
+*.i18n
+
+# Local environment / caches
+.cache/
+.vscode/
+/temp
