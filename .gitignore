@@ -45,3 +45,8 @@ Desktop.ini
 .cache/
 .vscode/
 /temp
+__pycache__
+
+# Project files
+/port
+/datasheet

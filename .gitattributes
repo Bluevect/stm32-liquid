@@ -1,0 +1,27 @@
+# 统一换行与二进制识别，避免不同平台提交时产生整文件换行变更。
+
+# 默认按文本处理，工作区统一 LF
+* text=auto eol=lf
+
+# Windows 脚本保留 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# 固件与图片按二进制处理，不做换行转换
+*.gif  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.pdf  binary
+*.bin  binary
+*.hex  binary
+*.elf  binary
+*.axf  binary
+*.su   binary
+*.o    binary
+*.obj  binary
+*.a    binary
+*.lib  binary
+*.exe  binary
