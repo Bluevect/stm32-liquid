@@ -41,18 +41,33 @@ New-Item -ItemType Directory -Force -Path 'build/preview/anim' | Out-Null
 Write-Output '=== liquid probe (30 deg tilt, 2500 steps) ==='
 & ./build/liquid_probe.exe 0.5 0.87 2500
 
-$python = 'python'
-try {
-    & $python -c 'import PIL' 2>$null
-    if ($LASTEXITCODE -ne 0) { throw 'no PIL' }
-} catch {
-    $python = 'C:\Users\Bluevect\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe'
-    Write-Output "(using bundled Python: $python)"
+function Resolve-Python {
+    $candidates = @()
+    if ($env:PYTHON) { $candidates += $env:PYTHON }
+    $candidates += 'python', 'python3', 'py'
+
+    foreach ($cmd in $candidates) {
+        $exe = $null
+        if (Test-Path -LiteralPath $cmd) {
+            $exe = $cmd
+        } else {
+            $found = Get-Command $cmd -ErrorAction SilentlyContinue
+            if ($found) { $exe = $found.Source }
+        }
+        if (-not $exe) { continue }
+
+        & $exe -c 'import PIL' 2>$null
+        if ($LASTEXITCODE -eq 0) { return $exe }
+    }
+
+    throw 'Python with Pillow not found. Set $env:PYTHON, or run: pip install pillow'
 }
+
+$python = Resolve-Python
+Write-Output "=== using Python: $python ==="
 
 Write-Output '=== preview images ==='
 & $python tests/make_preview.py anim
 & $python tests/make_preview.py contact
-& $python tests/make_preview.py readme
 
 Write-Output '=== host tests done ==='
